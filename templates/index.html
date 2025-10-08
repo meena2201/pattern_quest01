@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pattern Quest</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Confetti Animation Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  
+  <!-- Google Fonts - Fun fonts for kids -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Flask will correctly find this CSS file -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="main-layout">
+    <!-- Leaderboard on the left side -->
+    <div id="leaderboard" class="leaderboard-sidebar">
+      <h2>🏆 Top 8 Players</h2>
+      <ol id="leaderboard-list"></ol>
+    </div>
+
+    <!-- Main game container -->
+    <div class="container">
+      <h1>🧩 Pattern Quest</h1>
+
+      <div id="start-screen">
+        <h2>Welcome to Pattern Quest!</h2>
+        <p>Enter your name to start:</p>
+        <div class="name-input-section">
+          <label for="player-name-input">Name:</label>
+          <input type="text" id="player-name-input" placeholder="Your name" />
+        </div>
+        
+        <div class="difficulty-section">
+          <label>Select Difficulty:</label>
+          <div class="difficulty-buttons">
+            <button class="difficulty-btn" data-difficulty="easy">
+              😊 Easy<br><span class="diff-desc">30 sec/question</span>
+            </button>
+            <button class="difficulty-btn active" data-difficulty="medium">
+              😐 Medium<br><span class="diff-desc">20 sec/question</span>
+            </button>
+            <button class="difficulty-btn" data-difficulty="hard">
+              😤 Hard<br><span class="diff-desc">10 sec/question</span>
+            </button>
+          </div>
+        </div>
+        
+        <button id="start-button">Start Game</button>
+      </div>
+
+      <div id="game-screen" style="display: none;">
+        <button id="exit-button" class="exit-btn">🚪 Exit</button>
+        <button id="sound-toggle" class="sound-btn">🔊</button>
+        <div class="game-header">
+          <p id="player-name-display"></p>
+          
+          <!-- Progress Bar -->
+          <div class="progress-bar-container">
+            <div class="progress-bar">
+              <div id="progress-fill" class="progress-fill"></div>
+            </div>
+            <p class="progress-text">Progress: <span id="progress-percent">0%</span></p>
+          </div>
+          
+          <p id="game-display">Game 1</p>
+          <p id="level-display">Level 1</p>
+          <div id="stars-display" class="stars-container">
+            <span class="star">⭐</span>
+            <span class="star">⭐</span>
+            <span class="star">⭐</span>
+          </div>
+          <p id="score-display">Score: 0</p>
+          <p id="timer-display">⏱️ Time: 20s</p>
+          <p id="encouragement" class="encouragement-msg">You can do it! 💪</p>
+        </div>
+        <div id="pattern-sequence"></div>
+        <div id="options"></div>
+        <p id="feedback"></p>
+        <div class="button-group">
+          <button id="next-button" style="display:none;">Next ➡️</button>
+        </div>
+      </div>
+
+      <div id="end-screen" style="display: none;">
+        <p id="final-message"></p>
+        <button id="restart-button">Play Again</button>
+        <button id="front-page-button">Front Page</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Flask static path for JS -->
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

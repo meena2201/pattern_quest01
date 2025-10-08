@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard - Pattern Quest</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Fredoka', 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    .dashboard-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 30px;
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    
+    .stat-card {
+      background: linear-gradient(145deg, #ffffff, #f0f9ff);
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+    
+    .stat-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .stat-number {
+      font-size: 48px;
+      font-weight: 700;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    .back-btn {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      padding: 12px 30px;
+      border-radius: 15px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+      display: inline-block;
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+    
+    .back-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    
+    th {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      padding: 15px;
+      text-align: left;
+      font-weight: 600;
+    }
+    
+    td {
+      padding: 12px 15px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    
+    tr:hover {
+      background: #f5f5f5;
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+      <h1 style="font-size: 42px; color: #333; margin: 0;">📊 Admin Dashboard</h1>
+      <a href="/" class="back-btn">🏠 Back to Game</a>
+    </div>
+    
+    <!-- Statistics Cards -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 40px;">
+      <div class="stat-card">
+        <div style="color: #666; font-size: 16px; margin-bottom: 10px;">👥 Total Players</div>
+        <div class="stat-number" id="total-players">0</div>
+      </div>
+      
+      <div class="stat-card">
+        <div style="color: #666; font-size: 16px; margin-bottom: 10px;">🎮 Total Games</div>
+        <div class="stat-number" id="total-games">0</div>
+      </div>
+      
+      <div class="stat-card">
+        <div style="color: #666; font-size: 16px; margin-bottom: 10px;">📈 Average Score</div>
+        <div class="stat-number" id="avg-score">0</div>
+      </div>
+      
+      <div class="stat-card">
+        <div style="color: #666; font-size: 16px; margin-bottom: 10px;">🏆 Highest Score</div>
+        <div class="stat-number" id="highest-score">0</div>
+      </div>
+      
+      <div class="stat-card">
+        <div style="color: #666; font-size: 16px; margin-bottom: 10px;">⏱️ Avg Time (sec)</div>
+        <div class="stat-number" id="avg-time">0</div>
+      </div>
+    </div>
+    
+    <!-- Difficulty Stats -->
+    <div style="background: linear-gradient(145deg, #fef9f3, #ffffff); border-radius: 20px; padding: 30px; margin-bottom: 40px; box-shadow: 0 8px 20px rgba(0,0,0,0.1);">
+      <h2 style="color: #333; margin-bottom: 20px; font-size: 28px;">📊 Average Scores by Difficulty</h2>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+        <div style="text-align: center;">
+          <div style="font-size: 24px; margin-bottom: 10px;">😊 Easy</div>
+          <div style="font-size: 36px; font-weight: 700; color: #4CAF50;" id="easy-avg">0</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="font-size: 24px; margin-bottom: 10px;">😐 Medium</div>
+          <div style="font-size: 36px; font-weight: 700; color: #ff9800;" id="medium-avg">0</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="font-size: 24px; margin-bottom: 10px;">😤 Hard</div>
+          <div style="font-size: 36px; font-weight: 700; color: #f44336;" id="hard-avg">0</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Recent Players Table -->
+    <div style="background: linear-gradient(145deg, #ffffff, #f0f9ff); border-radius: 20px; padding: 30px; box-shadow: 0 8px 20px rgba(0,0,0,0.1);">
+      <h2 style="color: #333; margin-bottom: 20px; font-size: 28px;">🕐 Recent Players</h2>
+      <div style="overflow-x: auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>Player Name</th>
+              <th>Score</th>
+              <th>Difficulty</th>
+              <th>Time (sec)</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody id="recent-players-table">
+            <tr>
+              <td colspan="5" style="text-align: center; padding: 20px;">Loading...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Fetch and display admin statistics
+    async function loadAdminStats() {
+      try {
+        const response = await fetch('/api/admin/stats');
+        const data = await response.json();
+        
+        // Update stat cards
+        document.getElementById('total-players').textContent = data.total_players;
+        document.getElementById('total-games').textContent = data.total_games;
+        document.getElementById('avg-score').textContent = data.average_score;
+        document.getElementById('highest-score').textContent = data.highest_score;
+        document.getElementById('avg-time').textContent = data.average_time;
+        
+        // Update difficulty stats
+        document.getElementById('easy-avg').textContent = data.difficulty_stats.easy;
+        document.getElementById('medium-avg').textContent = data.difficulty_stats.medium;
+        document.getElementById('hard-avg').textContent = data.difficulty_stats.hard;
+        
+        // Update recent players table
+        const tableBody = document.getElementById('recent-players-table');
+        if (data.recent_players.length === 0) {
+          tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 20px;">No players yet</td></tr>';
+        } else {
+          tableBody.innerHTML = data.recent_players.map(player => `
+            <tr>
+              <td><strong>${player.name}</strong></td>
+              <td>${player.score}</td>
+              <td><span style="text-transform: capitalize;">${player.difficulty}</span></td>
+              <td>${player.time_taken || 'N/A'}</td>
+              <td>${new Date(player.created_at).toLocaleString()}</td>
+            </tr>
+          `).join('');
+        }
+      } catch (error) {
+        console.error('Error loading admin stats:', error);
+      }
+    }
+    
+    // Load stats on page load
+    loadAdminStats();
+    
+    // Auto-refresh every 10 seconds
+    setInterval(loadAdminStats, 10000);
+  </script>
+</body>
+</html>
